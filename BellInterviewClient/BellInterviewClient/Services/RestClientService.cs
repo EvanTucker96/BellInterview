@@ -1,4 +1,5 @@
 ﻿using BellInterviewClient.Utility;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -25,16 +26,38 @@ namespace BellInterviewClient.Services
             var httpClient = new HttpClient();
 
             var result = await httpClient.GetAsync(API_URI);
+
+            if (result.IsSuccessStatusCode)
+            {
+                var response = await result.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<List<Client>>(response);
+            }
+            else
+            {
+                //to do: error for failed response.
+                return null;
+            }
+
             
         }
 
-        public async Client GetClientAsync(Client client)
+        public async Task<Client> GetClientAsync(Client client)
         {
             var httpClient = new HttpClient();
 
             var result = await httpClient.GetAsync(API_URI + client.clientId);
+
+            if (result.IsSuccessStatusCode)
+            {
+                var response = await result.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<Client>(response);
+            }
+            else
+            {
+                //to do: error for failed response.
+                return null;
+            }
         }
 
-        public async
     }
 }

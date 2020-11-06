@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Tucker\\source\\repos\\BellInterviewEvanTucker\\BellInterviewServer\\BellInterviewServer\\BellInterviewServer.csproj": {}
+    "C:\\Users\\Tucker\\source\\repos\\BellInterviewEvanTucker\\BellInterview\\BellInterviewServer\\BellInterviewServer\\BellInterviewServer.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Tucker\\source\\repos\\BellInterviewEvanTucker\\BellInterviewServer\\BellInterviewServer\\BellInterviewServer.csproj": {
+    "C:\\Users\\Tucker\\source\\repos\\BellInterviewEvanTucker\\BellInterview\\BellInterviewServer\\BellInterviewServer\\BellInterviewServer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Tucker\\source\\repos\\BellInterviewEvanTucker\\BellInterviewServer\\BellInterviewServer\\BellInterviewServer.csproj",
+        "projectUniqueName": "C:\\Users\\Tucker\\source\\repos\\BellInterviewEvanTucker\\BellInterview\\BellInterviewServer\\BellInterviewServer\\BellInterviewServer.csproj",
         "projectName": "BellInterviewServer",
-        "projectPath": "C:\\Users\\Tucker\\source\\repos\\BellInterviewEvanTucker\\BellInterviewServer\\BellInterviewServer\\BellInterviewServer.csproj",
+        "projectPath": "C:\\Users\\Tucker\\source\\repos\\BellInterviewEvanTucker\\BellInterview\\BellInterviewServer\\BellInterviewServer\\BellInterviewServer.csproj",
         "packagesPath": "C:\\Users\\Tucker\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Tucker\\source\\repos\\BellInterviewEvanTucker\\BellInterviewServer\\BellInterviewServer\\obj\\",
+        "outputPath": "C:\\Users\\Tucker\\source\\repos\\BellInterviewEvanTucker\\BellInterview\\BellInterviewServer\\BellInterviewServer\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Tucker\\AppData\\Roaming\\NuGet\\NuGet.Config",
