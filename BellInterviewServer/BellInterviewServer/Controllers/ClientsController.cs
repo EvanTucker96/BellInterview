@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BellInterviewClient;
 using BellInterviewServer.SQLServer.Context;
+using BellInterviewServer.Models;
 
 namespace BellInterviewServer.Controllers
 {
@@ -15,31 +16,31 @@ namespace BellInterviewServer.Controllers
     public class ClientsController : ControllerBase
     {
         private readonly ServerAPIContext _context;
+        private readonly ClientRepository _clientRepository;
 
-        public ClientsController(ServerAPIContext context)
+        public ClientsController(ServerAPIContext context, ClientRepository clientRepository)
         {
             _context = context;
+            _clientRepository = clientRepository;
         }
 
         // GET: api/Clients
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Client>>> GetClients()
+        public IEnumerable<Client> GetClients()
         {
-            return await _context.Clients.ToListAsync();
+            //return await _context.Clients.ToListAsync();
+            return _clientRepository.GetClients();
         }
 
         // GET: api/Clients/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Client>> GetClient(Guid id)
+        public async Task<Client> GetClient(Guid id)
         {
-            var client = await _context.Clients.FindAsync(id);
-
-            if (client == null)
-            {
-                return NotFound();
-            }
+            //var client = await _context.Clients.FindAsync(id);
+            var client = await _clientRepository.GetClientByID(id);
 
             return client;
+            
         }
 
         // PUT: api/Clients/5
@@ -48,46 +49,35 @@ namespace BellInterviewServer.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutClient(Guid id, Client client)
         {
-            if (id != client.clientId)
+           if (await _clientRepository.UpdateClient(client, id))
+            {
+                return Ok();
+            }
+            else
             {
                 return BadRequest();
             }
-
-            _context.Entry(client).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ClientExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
         }
 
         // POST: api/Clients
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Client>> PostClient(Client client)
+        public async Task<IActionResult> PostClient(Client client)
         {
             var validator = new ClientValidator();
             var result = validator.Validate(client);
 
             if (result.IsValid)
             {
-                _context.Clients.Add(client);
-                await _context.SaveChangesAsync();
-                return CreatedAtAction("GetClient", new { id = client.clientId }, client);
+                if (await _clientRepository.InsertClient(client)) 
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return BadRequest();
+                }
             }
             else
             {
@@ -100,21 +90,15 @@ namespace BellInterviewServer.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Client>> DeleteClient(Guid id)
         {
-            var client = await _context.Clients.FindAsync(id);
-            if (client == null)
+           if (await _clientRepository.DeleteClient(id))
             {
-                return NotFound();
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
             }
 
-            _context.Clients.Remove(client);
-            await _context.SaveChangesAsync();
-
-            return client;
-        }
-
-        private bool ClientExists(Guid id)
-        {
-            return _context.Clients.Any(e => e.clientId == id);
         }
     }
 }

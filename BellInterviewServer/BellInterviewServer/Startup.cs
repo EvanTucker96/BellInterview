@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BellInterviewServer.Models;
 using BellInterviewServer.SQLServer.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -30,7 +31,14 @@ namespace BellInterviewServer
         {
             services.AddDbContext<ServerAPIContext>(i => i.UseSqlServer(Configuration.GetConnectionString("SQLServerContext")));
             services.AddControllers();
-                
+            if (Configuration["AppSettings:ClientRepository"] == "EF")
+            {
+                services.AddSingleton<IClientRepository, ClientRepository>();
+            }
+            else
+            {
+                services.AddSingleton<IClientRepository, FileClientRepository>();
+            }
 
         }
 
